@@ -92,8 +92,92 @@
             box-shadow: 0 0 25px rgba(45, 140, 255, 0.4);
         }
 
+        .countdown {
+            background: rgba(20, 20, 20, 0.9);
+            border: 2px solid #2d8cff;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin: 40px auto 60px;
+            max-width: 900px;
+            box-shadow: 0 0 30px rgba(45, 140, 255, 0.2);
+        }
+
+        .countdown h2 {
+            color: #ff6b6b;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .time-unit {
+            background: rgba(45, 140, 255, 0.1);
+            border: 2px solid #2d8cff;
+            border-radius: 10px;
+            padding: 15px;
+            min-width: 100px;
+            backdrop-filter: blur(5px);
+        }
+
+        .time-value {
+            font-size: 2.5em;
+            color: #2d8cff;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(45, 140, 255, 0.5);
+        }
+
+        .time-label {
+            color: #b0b0b0;
+            font-size: 1em;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .new-year-message {
+            color: #ffd700;
+            font-size: 1.2em;
+            margin-top: 20px;
+            font-style: italic;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .progress-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 20px;
+            margin: 25px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #2d8cff, #ff6b6b);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-text {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
         main {
-            padding: 40px 20px;
+            padding: 20px 20px 40px;
         }
 
         .section-grid {
@@ -231,7 +315,6 @@
             margin-top: 20px;
         }
 
-
         .snowflake {
             position: fixed;
             background-color: rgba(255, 255, 255, 0.8);
@@ -267,6 +350,12 @@
             50% { opacity: 1; }
         }
 
+        @keyframes pulse {
+            0% { box-shadow: 0 0 30px rgba(45, 140, 255, 0.2); }
+            50% { box-shadow: 0 0 50px rgba(255, 107, 107, 0.4); }
+            100% { box-shadow: 0 0 30px rgba(45, 140, 255, 0.2); }
+        }
+
         @media (max-width: 768px) {
             .name {
                 font-size: 2.5em;
@@ -277,6 +366,23 @@
             }
             .container {
                 padding: 10px;
+            }
+            .countdown {
+                margin: 30px auto 40px;
+                padding: 20px;
+            }
+            .countdown h2 {
+                font-size: 1.5em;
+            }
+            .countdown-timer {
+                gap: 10px;
+            }
+            .time-unit {
+                min-width: 70px;
+                padding: 10px;
+            }
+            .time-value {
+                font-size: 1.8em;
             }
             .card {
                 padding: 20px;
@@ -299,13 +405,42 @@
 
     <div class="container">
         <header>
-            <!-- Ваша аватарка -->
             <img src="https://i.postimg.cc/htC7CJhT/photo-2025-11-26-11-26-49.jpg" alt="Аватар Sofer/Erbium" class="avatar">
             <h1 class="name">Sofer / Erbium</h1>
             <p class="tagline">Разработчик читов на разные игры.</p>
             <a href="https://github.com/Erbium1337" target="_blank" class="github-link">
                 <i class="fab fa-github"></i> GitHub: Erbium1337
             </a>
+
+            <div class="countdown">
+                <h2><i class="fas fa-clock"></i> До Нового 2026 года осталось:</h2>
+                <div class="countdown-timer">
+                    <div class="time-unit">
+                        <div class="time-value" id="countdown-days">00</div>
+                        <div class="time-label">дней</div>
+                    </div>
+                    <div class="time-unit">
+                        <div class="time-value" id="countdown-hours">00</div>
+                        <div class="time-label">часов</div>
+                    </div>
+                    <div class="time-unit">
+                        <div class="time-value" id="countdown-minutes">00</div>
+                        <div class="time-label">минут</div>
+                    </div>
+                    <div class="time-unit">
+                        <div class="time-value" id="countdown-seconds">00</div>
+                        <div class="time-label">секунд</div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="year-progress">
+                        <div class="progress-text" id="progress-percent">0%</div>
+                    </div>
+                </div>
+                
+                <p class="new-year-message" id="new-year-message">Готовься к 2026!</p>
+            </div>
         </header>
 
         <main>
@@ -318,19 +453,17 @@
                 <div class="card">
                     <h2><i class="fas fa-code"></i> Языки программирования</h2>
                     <div class="languages-grid">
-                        <!-- Только три языка, как вы просили -->
                         <span class="language">Python</span>
                         <span class="language">Java</span>
                         <span class="language">C++</span>
                     </div>
                 </div>
 
-                <!-- Карточка проектов с центрированным содержимым -->
                 <div class="card projects-card">
                     <h2><i class="fas fa-project-diagram"></i> Проекты</h2>
                     <ul>
                         <li><i class="fas fa-cube"></i> <strong>Arctic Client</strong> - Чит под майнкрафт для серверов с Sloth AC</li>
-                        <li><i class="fas fa-shield-alt"></i> <strong>WallHack Roblox</strong> - Валлхак для роблокса полностью написаный на пайтон</li>
+                        <li><i class="fas fa-shield-alt"></i> <strong>WallHack Roblox</strong> - Валлхак для роблокса полностью написанный на Python</li>
                     </ul>
                 </div>
             </div>
@@ -341,7 +474,7 @@
                 <a href="https://github.com/Erbium1337" target="_blank" title="GitHub">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="https://t.me/BETADLC" target="_blank" title="GitHub">
+                <a href="https://t.me/BETADLC" target="_blank" title="Telegram">
                     <i class="fab fa-telegram"></i>
                 </a>
             </div>
@@ -350,7 +483,7 @@
     </div>
 
     <script>
-        // Создание звезд на фоне
+
         function createStars() {
             const starsContainer = document.getElementById('stars');
             const starCount = 100;
@@ -372,7 +505,6 @@
             }
         }
 
-        // Создание снежинок
         function createSnowflake() {
             const snowflake = document.createElement('div');
             snowflake.classList.add('snowflake');
@@ -391,24 +523,106 @@
             setTimeout(() => { if (snowflake.parentNode) snowflake.remove(); }, duration * 1000);
         }
 
-        // Запуск снегопада
         let snowInterval;
         function startSnowfall() {
             snowInterval = setInterval(createSnowflake, 200);
         }
 
-        // Инициализация
-        document.addEventListener('DOMContentLoaded', () => {
-            createStars();
-            startSnowfall();
-            // Установка текущего года в футере
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-            // Консольное приветствие
-            console.log('%c🚀 Sofer/Erbium', 'color: #2d8cff; font-size: 18px; font-weight: bold;');
-            console.log('%cGitHub: https://github.com/Erbium1337', 'color: #8a8a8a;');
-        });
+        function updateCountdown() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const nextYear = currentYear + 1;
+            const newYearDate = new Date(nextYear, 0, 1, 0, 0, 0);
+            const diff = newYearDate - now;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('countdown-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('countdown-minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('countdown-seconds').textContent = String(seconds).padStart(2, '0');
+            
+            const startOfYear = new Date(currentYear, 0, 1);
+            const endOfYear = new Date(nextYear, 0, 1);
+            const totalYearMs = endOfYear - startOfYear;
+            const elapsedMs = now - startOfYear;
+            const progressPercent = Math.min(100, (elapsedMs / totalYearMs * 100).toFixed(1));
+            
+            const progressBar = document.getElementById('year-progress');
+            progressBar.style.width = progressPercent + '%';
+            document.getElementById('progress-percent').textContent = progressPercent + '%';
+            
+            const messages = [
+                "Скоро 2026!"
+            ];
+            
+            if (seconds % 10 === 0) {
+                const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+                document.getElementById('new-year-message').textContent = randomMsg;
+                
+                if (seconds % 30 === 0 && diff > 0) {
+                    createCelebrationEffect();
+                }
+            }
+            
+            if (days === 0 && hours < 6 && diff > 0) {
+                const countdownEl = document.querySelector('.countdown');
+                countdownEl.style.animation = 'pulse 1s infinite';
+                countdownEl.style.borderColor = '#ff0000';
+            }
+            
+            if (now.getMonth() === 11 && diff > 0) {
+                if (Math.random() > 0.7) {
+                    createSnowflake();
+                }
+            }
+            
+            if (diff <= 0) {
+                document.querySelector('.countdown h2').innerHTML = '<i class="fas fa-star"></i> С Новым 2026 Годом! 🎉';
+                document.querySelector('.countdown-timer').innerHTML = '<div class="time-unit"><div class="time-value">00</div><div class="time-label">дней</div></div><div class="time-unit"><div class="time-value">00</div><div class="time-label">часов</div></div><div class="time-unit"><div class="time-value">00</div><div class="time-label">минут</div></div><div class="time-unit"><div class="time-value">00</div><div class="time-label">секунд</div></div>';
+                document.getElementById('new-year-message').textContent = 'С новыми проектами и успехами в программировании! 🚀';
+                progressBar.style.width = '100%';
+                document.getElementById('progress-percent').textContent = '100%';
+                
+                if (Math.random() > 0.9) {
+                    createCelebrationEffect();
+                }
+            }
+        }
 
-        // Снежинки при наведении на языки
+        function createCelebrationEffect() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const colors = ['#2d8cff', '#ff6b6b', '#ffd700', '#00ff00', '#ff00ff'];
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-20px';
+                    confetti.style.zIndex = '9999';
+                    confetti.style.pointerEvents = 'none';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    const animation = confetti.animate([
+                        { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                        { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                    ], {
+                        duration: Math.random() * 3000 + 2000,
+                        easing: 'cubic-bezier(0.1, 0.7, 0.1, 1)'
+                    });
+                    
+                    animation.onfinish = () => confetti.remove();
+                }, i * 100);
+            }
+        }
+
         document.querySelectorAll('.language').forEach(lang => {
             lang.addEventListener('mouseenter', function() {
                 const rect = this.getBoundingClientRect();
@@ -440,6 +654,17 @@
             document.body.appendChild(flake);
             setTimeout(() => { if (flake.parentNode) flake.remove(); }, duration * 1000);
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            startSnowfall();
+            
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            
+        });
     </script>
 </body>
 </html>
