@@ -15,19 +15,6 @@
 * **🧊 Arctic Client** — Высокотехнологичный клиент для Minecraft, оптимизированный для обхода систем защиты (Sloth AC).
 * **🛡 WallHack Roblox** — Внешний инструмент визуализации для Roblox, полностью написанный на Python с акцентом на оптимизацию.
 
----
-
-### 📈 Статистика GitHub
-
-<p align="left">
-  <img align="center" src="https://github-readme-stats.vercel.app/api?username=Erbium1337&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true" />
-</p>
-
-<p align="left">
-  <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Erbium1337&layout=compact&theme=tokyonight" />
-</p>
-
----
 
 ### 📱 Связь со мной
 
